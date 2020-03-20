@@ -32,10 +32,13 @@ export default function AreaCard({ area, openArea = null }) {
 
     return (
         <div className="area-card" onClick={() => openArea(_id)}>
-            <img className="area-card-image" src={imageFile} alt={name} />
+            <div className="area-card-image-container">
+                <img className="area-card-image" src={imageFile} alt={name} />
+            </div>
+            <h3 style={{padding: "0 10px", margin: "10px 0 0 10px"}}>{name}</h3>
             <div className="area-card-props">
                 <ul>
-                    <li><h3>{name}</h3></li>
+                    
                     <li><h4>{`≅ ${size ? size : 'N/A'} ha`}</h4></li>
                     <li>{`Data de plantio: ${new Date(sowingDate).toLocaleDateString('pt-BR', { dateStyle: 'short' })}`}</li>
                     <li>{`Dias de ciclo: ${cycleDays}`}</li>

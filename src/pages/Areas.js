@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as ACTIONS from '../actions';
 import AreaCard from '../components/Areas/AreaCard';
-import Area from '../components/Areas/Area';
+import AreaFull from '../components/Areas/AreaFull';
 import { Redirect } from 'react-router-dom';
 import Menu from '../components/Global/Menu';
 import { AiOutlineLoading } from "react-icons/ai";
@@ -23,7 +23,7 @@ export function Areas({ customer, areas, server, dispatch }) {
     }, [customer, dispatch])
 
     return (
-        <div style={{paddingTop: 60}}>
+        <div style={{ paddingTop: 60 }}>
             <Menu />
             {
                 server.msg === 'areas-request' && (
@@ -34,7 +34,7 @@ export function Areas({ customer, areas, server, dispatch }) {
                     </div>
                 )
             }
-            <div className="areas">
+            <div className={`areas transition ${selectedArea ? 'out' : ''}`}>
                 {
                     customer === null && <Redirect to="/" />
                 }
@@ -45,12 +45,13 @@ export function Areas({ customer, areas, server, dispatch }) {
                         }
                     )
                 }
-                {
-                    selectedArea && (
-                        <Area data={selectedArea} openArea={openArea}/>
-                    )
-                }
+
             </div>
+            {
+                selectedArea && (
+                    <AreaFull data={selectedArea} openArea={openArea} />
+                )
+            }
         </div>
     )
 }
