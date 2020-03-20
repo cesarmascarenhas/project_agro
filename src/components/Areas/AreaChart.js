@@ -2,13 +2,15 @@ import React from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
 
 
-export default function AreaChart({data, color}) {
+export default function AreaChart({ data, color = '#fff', reverse = false }) {
     return (
-        <LineChart width={360} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }} >
-            <Line type="monotone" dataKey="value" stroke="#8884d8" isAnimationActive={false} />
-            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-            <XAxis dataKey="label" />
-            <YAxis dataKey="value"/>
-        </LineChart>
+        <div style={{ backgroundColor: color, padding: "10px 0" }}>
+            <LineChart width={360} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }} >
+                <Line type="monotone" dataKey="value" stroke={reverse ? "#fff" : '#424242'} isAnimationActive={false} />
+                <CartesianGrid stroke={reverse ? "#fff" : '#424242'} strokeDasharray="3 3" />
+                <XAxis dataKey="label" tick={{ fill: reverse ? "#fff" : "#424242" }} stroke={reverse ? "#fff" : '#424242'} />
+                <YAxis dataKey="value" tick={{ fill: reverse ? "#fff" : "#424242" }} stroke={reverse ? "#fff" : '#424242'} />
+            </LineChart>
+        </div>
     )
 }

@@ -47,7 +47,7 @@ export function Areas({ customer, areas, server, dispatch }) {
                 }
                 {
                     selectedArea && (
-                        <Area data={selectedArea} />
+                        <Area data={selectedArea} openArea={openArea}/>
                     )
                 }
             </div>

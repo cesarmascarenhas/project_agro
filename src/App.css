@@ -263,8 +263,22 @@ input:focus {
   max-width: 400px;
   max-height: 600px;
   overflow-y: scroll;
-  animation: enter-area ease-out 300ms forwards;
+  animation: enter-area 300ms ease-out forwards;
   padding: 20px;
+}
+
+.area .area-card {
+  width: calc(100% + 40px);
+  margin: -20px;
+  margin-bottom: 20px;
+  overflow: initial;
+  box-shadow: none;
+}
+
+.area .area-card:hover {
+  transform: none;
+  transition: none;
+  box-shadow: none;
 }
 
 /* APP MENU */
@@ -329,12 +343,12 @@ input:focus {
 @keyframes enter-area {
   from {
     opacity: 0.01;
-    transform: translateY(50);
+    transform: translateY(50px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0px);
   }
 }
 
