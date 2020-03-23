@@ -1,5 +1,6 @@
 import React from 'react';
 import * as AREA from '../../helpers/area';
+import WeatherCard from '../Weather/WeatherCard';
 
 export default function AreaCardFull({ area }) {
 
@@ -36,29 +37,29 @@ export default function AreaCardFull({ area }) {
                 <div className="area-card-image-container">
                     <img className="area-card-image" src={imageFile} alt={name} />
                 </div>
-                <div>
-                    <ul>
-                        <li><h2 style={{ padding: "0 10px", margin: "10px 0 0 10px" }}>{name}</h2></li>
-                        <li><h4>{`≅ ${size ? size : 'N/A'} ha`}</h4></li>
-                        <li>{`Data de plantio: ${new Date(sowingDate).toLocaleDateString('pt-BR', { dateStyle: 'short' })}`}</li>
-                        <li>{`Dias de ciclo: ${cycleDays}`}</li>
-                        <li>
-                            <div className="area-card-types">
-                                <div>
-                                    {
-                                        <img src={soil.icon} alt={soil.label} />
-                                    }
-                                </div>
-                                <div>
-                                    {
-                                        <img src={culture.icon} alt={culture.label} />
-                                    }
-                                </div>
+                <div style={{display: 'flex', flexGrow: 1, flexDirection: 'column'}}>
+                    <div style={{display: 'flex', borderBottom: "solid 1px #c3c3c3"}}>
+                        <ul style={{ padding: "0 20px" }}>
+                            {/* <li><h2 style={{ margin: "0" }}>{name}</h2></li> */}
+                            <li><h3>{`≅ ${size ? size : 'N/A'} ha`}</h3></li>
+                            <li>{`Data de plantio: ${new Date(sowingDate).toLocaleDateString('pt-BR', { dateStyle: 'short' })}`}</li>
+                            <li>{`Dias de ciclo: ${cycleDays}`}</li>
+                        </ul>
+                        <div className="area-card-types">
+                            <div>
+                                {
+                                    <img src={soil.icon} alt={soil.label} />
+                                }
                             </div>
-                        </li>
-                    </ul>
+                            <div>
+                                {
+                                    <img src={culture.icon} alt={culture.label} />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <WeatherCard data={area.weather.week} />
                 </div>
-
             </div>
         </div>
     )
