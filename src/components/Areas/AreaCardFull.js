@@ -24,9 +24,15 @@ export default function AreaCardFull({ area }) {
         soilType,
         cycleDays,
         sowingDate,
+        variety,
+        irrigation,
+        population,
+        spacing,
         //notification,
         size
     } = area;
+
+    console.log(area)
 
     const soil = getSoil(soilType);
     const culture = getCulture(cultureType);
@@ -37,13 +43,17 @@ export default function AreaCardFull({ area }) {
                 <div className="area-card-image-container">
                     <img className="area-card-image" src={imageFile} alt={name} />
                 </div>
-                <div style={{display: 'flex', flexGrow: 1, flexDirection: 'column'}}>
-                    <div style={{display: 'flex', borderBottom: "solid 1px #c3c3c3"}}>
+                <div style={{ display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
+                    <div style={{ display: 'flex', borderBottom: "solid 1px #c3c3c3" }}>
                         <ul style={{ padding: "0 20px" }}>
                             {/* <li><h2 style={{ margin: "0" }}>{name}</h2></li> */}
                             <li><h3>{`≅ ${size ? size : 'N/A'} ha`}</h3></li>
                             <li>{`Data de plantio: ${new Date(sowingDate).toLocaleDateString('pt-BR', { dateStyle: 'short' })}`}</li>
                             <li>{`Dias de ciclo: ${cycleDays}`}</li>
+                            <li>{`Variedade: ${variety}`}</li>
+                            <li>{`Sistema de irrigação: ${irrigation}`}</li>
+                            <li>{`Espaçamento da cultura: ${spacing}`}</li>
+                            <li>{`População: ${population}`}</li>
                         </ul>
                         <div className="area-card-types">
                             <div>

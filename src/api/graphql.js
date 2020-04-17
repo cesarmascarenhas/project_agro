@@ -18,10 +18,10 @@ const coordinateFragment = `
 /*----------------------------- CUSTOMER --------------------------------- */
 // LOGIN -------------------------------------------------------------------
 export function customerLogin({
-    username,
-    password
+	username,
+	password
 }) {
-    return `
+	return `
         query{
             customerLogin(username: "${username}", password: "${password}"){
                 _id
@@ -33,9 +33,9 @@ export function customerLogin({
 }
 // CUSTOMER DATA -------------------------------
 export function customer({
-  id
-}){
-  return `
+	id
+}) {
+	return `
   query {
       customer(id: ${id}) {
         area {
@@ -45,6 +45,45 @@ export function customer({
           soilType
           sowingDate
           cultureType
+          spacing
+          population
+          tetaCC
+          tetaPMP
+          soilHumidity
+          soilDepth
+          irrigationSystem
+          leaf
+          percentimeter
+          efficiency
+          irrigationType
+          variety
+          bh {
+            rootDepth
+            kc
+            etc
+            p
+            AFD
+            AFDf
+            AFDi
+            effectiveRain
+            irrigation
+            complementarWater
+            sowingdays
+            range
+            altitude
+            _createdAt
+          }
+          nearStation {
+            label
+            altitude
+            data {
+              precipitation
+              windVelocity
+              tempNow
+              humidity
+              _date
+            }
+          }
           weather {
             day {
               ${weatherFragment}
@@ -88,13 +127,13 @@ export function customer({
 /*------------------------------------ CUSTOMER ----------------------------------- */
 // REGISTER --------------------------------------------------------------------------
 export function customerAdd({
-    name,
-    password,
-    email,
-    facebook,
-    hardwareUID,
+	name,
+	password,
+	email,
+	facebook,
+	hardwareUID,
 }) {
-    return `
+	return `
         mutation {
             customerAdd(
                 name:"${name}",
@@ -112,66 +151,68 @@ export function customerAdd({
 
 /*------------------------------------ AREA ----------------------------------- */
 // ADD AREA ---------------------------------------------------------------------
-export function areaAdd({
-  name,
-  cultureType,
-  soilType,
-  cycleDays,
-  sowingDate,
-  boundary,
-  square,
-  center,
-  size,
-  imageFile,
-  _customerId
-}) {
+export function areaAdd({ ...area }) {
 
-  function toGraphQL(object) {
-    let qql = '';
-    if (Array.isArray(object)) {
-      qql += '['
-      object.forEach(item => {
-        qql += "{"
-        for (let key in item) {
-          qql += `${key}: "${item[key]}", `
-        }
-        qql += "},"
-      })
-      qql += ']'
-    } else {
-      qql += "{"
-      for (let key in object) {
-        qql += `${key}: "${object[key]}", `
-      }
-      qql += "}"
-    }
-    return qql;
-  }
+	function toGraphQL(object) {
+		let qql = '';
+		if (Array.isArray(object)) {
+			qql += '['
+			object.forEach(item => {
+				qql += "{"
+				for (let key in item) {
+					qql += `${key}: "${item[key]}", `
+				}
+				qql += "},"
+			})
+			qql += ']'
+		} else {
+			qql += "{"
+			for (let key in object) {
+				qql += `${key}: "${object[key]}", `
+			}
+			qql += "}"
+		}
+		return qql;
+	}
 
-  const dateSplit = sowingDate.split('/')
-  const dateToISO = new Date(`${dateSplit[1]}/${dateSplit[0]}/${dateSplit[2]}`).toISOString();
-  
-  return `
+	function getMutationFields(field) {
+		let qql = '';
+		for (let key in field) {
+			if (key === 'boundary' || key === 'square' || key === 'center') {
+				qql += `${key}: ${toGraphQL(field[key])} \n`;
+			} else if (key === 'sowingDate') {
+				const dateSplit = field[key].split('/')
+				const dateToISO = new Date(`${dateSplit[1]}/${dateSplit[0]}/${dateSplit[2]}`).toISOString();
+				qql += `${key}: "${dateToISO}" \n`;
+			} else if (key === 'cultureType' || key === 'soilType' || key === 'irrigationSystem') {
+				qql += `${key}: ${field[key]} \n`;
+			} else {
+				qql += `${key}: "${field[key]}" \n`;
+			}
+		}
+		return qql;
+	}
+
+	return `
     mutation{
       areaAdd(
-        name: "${name}",
-        cultureType: ${cultureType},
-        soilType: ${soilType} ,
-        cycleDays: "${cycleDays}",
-        sowingDate:"${dateToISO}",
-        boundary:${toGraphQL(boundary)},
-        square:${toGraphQL(square)},
-        center:${toGraphQL(center)},
-        size:"${size}"
-        imageFile:"${imageFile}"
-        _customerId: ${_customerId}
+        ${getMutationFields(area)}
       ){
-        _id,
+        _id
         name
         imageFile
         soilType
         sowingDate
         cultureType
+        tetaCC
+        tetaPMP
+        soilHumidity
+        soilDepth
+        irrigationSystem
+        leaf
+        percentimeter
+        efficiency
+        irrigationType
         weather {
           day {
             ${weatherFragment}
