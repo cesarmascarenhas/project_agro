@@ -1,7 +1,7 @@
 import * as GraphQL from './graphql';
 
-const server = 'http://localhost:2526';
-//const server = 'http://174.138.58.197:2526';
+//const server = 'http://localhost:2526';
+const server = 'http://174.138.58.197:2526';
 const endpoint = server+'/graphql';
 const uploadpoint = server+'/upload';
 const method = 'POST';
