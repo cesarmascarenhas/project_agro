@@ -27,6 +27,10 @@ ul {
   background-color: #3e3e3e;
 }
 
+h4 {
+  color: rgb(230, 177, 2);
+}
+
 .container-login {
   position: absolute;
   width: 100%;
@@ -95,10 +99,14 @@ ul {
 }
 
 .login-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 49px;
+  height: 100%;
+  width: 100%;
 }
 
 .spin {
@@ -198,17 +206,21 @@ input:focus {
 
 .area-card-full .area-card-props {
   justify-content: flex-start;
-  
+  align-items: flex-start;
 }
 
 .area-card-full .area-card-image-container {
-  height: 300px;
+  height: 100%;
   flex-basis: 33%;
+  border-right: 1px solid rgb(195, 195, 195);
 }
 
 .area-card-image-container:hover .area-card-image {
   transform: scale(1.1, 1.1);
   /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3), 0px 0.3px 0.9px rgba(0, 0, 0, 0.35); */
+}
+.area-card-full .area-card-image-container:hover .area-card-image {
+  transform: none;
 }
 
 .area-card-image-container {
@@ -285,15 +297,15 @@ input:focus {
 
 .areafull-container {
   width: 100%;
-  height: calc(100vh - 60px);
+  height: calc(100vh);
   position: fixed;
-  top: 0;
+  top: 0px;
   background-color: rgba(255, 255, 255, 0.75);
   display: flex;
   justify-content: center;
   /* align-items: center;
   overflow: hidden; */
-  padding-top: 70px;
+  padding-top: 60px;
   animation: enter-area 350ms ease-out forwards;
   overflow-y: auto;
 }
@@ -306,7 +318,8 @@ input:focus {
 .areafull {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
+  margin-bottom: 20px;
 }
 
 .areafull>div {
@@ -315,13 +328,14 @@ input:focus {
 
 .area-card-full .area-card-types{
   justify-content: flex-end;
+  align-items: flex-start;
   margin: 10px 0;
   flex-basis: 100%;
   margin-right: 20px;
 }
 
 .area-card-full .area-card-props>div {
-  flex-basis: 33%;
+  flex-basis: 25%;
 }
 
 .area {

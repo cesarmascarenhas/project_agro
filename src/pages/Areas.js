@@ -23,7 +23,7 @@ export function Areas({ customer, areas, server, dispatch }) {
     }, [customer, dispatch])
 
     return (
-        <div style={{ paddingTop: 60 }}>
+        <div style={{ paddingTop: 60, height: "100%" }}>
             <Menu />
             {
                 server.msg === 'areas-request' && (

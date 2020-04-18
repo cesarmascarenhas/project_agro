@@ -24,15 +24,23 @@ export default function AreaCardFull({ area }) {
         soilType,
         cycleDays,
         sowingDate,
-        variety,
-        irrigation,
-        population,
-        spacing,
         //notification,
-        size
+        tetaCC,
+        tetaPMP,
+        soilHumidity,
+        soilDepth,
+        irrigationSystem,
+        leaf,
+        percentimeter,
+        efficiency,
+        irrigationType,
+        spacing,
+        population,
+        variety,
+        size,
+        boundary,
+        nearStation
     } = area;
-
-    console.log(area)
 
     const soil = getSoil(soilType);
     const culture = getCulture(cultureType);
@@ -41,19 +49,42 @@ export default function AreaCardFull({ area }) {
         <div className="area-card-full">
             <div className="area-card-props">
                 <div className="area-card-image-container">
-                    <img className="area-card-image" src={imageFile} alt={name} />
+                    <div>
+                        <img className="area-card-image" src={imageFile} alt={name} />
+                        <div style={{padding: 12}}>
+                            <p>lat, lon (center): {boundary.center.latitude}, {boundary.center.longitude}</p> 
+                            <p>altitude: ≅ {nearStation[0].altitude}m</p>
+                        </div>
+                    </div>
                 </div>
                 <div style={{ display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
                     <div style={{ display: 'flex', borderBottom: "solid 1px #c3c3c3" }}>
                         <ul style={{ padding: "0 20px" }}>
-                            {/* <li><h2 style={{ margin: "0" }}>{name}</h2></li> */}
                             <li><h3>{`≅ ${size ? size : 'N/A'} ha`}</h3></li>
-                            <li>{`Data de plantio: ${new Date(sowingDate).toLocaleDateString('pt-BR', { dateStyle: 'short' })}`}</li>
-                            <li>{`Dias de ciclo: ${cycleDays}`}</li>
-                            <li>{`Variedade: ${variety}`}</li>
-                            <li>{`Sistema de irrigação: ${irrigation}`}</li>
-                            <li>{`Espaçamento da cultura: ${spacing}`}</li>
-                            <li>{`População: ${population}`}</li>
+                            <li><b>Data de plantio: </b>{new Date(sowingDate).toLocaleDateString('pt-BR', { dateStyle: 'short' })}</li>
+                            <li><b>Dias de ciclo: </b>{cycleDays}</li>
+                            <li><h4>Solo</h4></li>
+                            <li><b>θcc: </b>{tetaCC}</li>
+                            <li><b>θpmp: </b>{tetaPMP}</li>
+                            <li><b>Umidade: </b>{soilHumidity}</li>
+                            <li><b>Profundidade: </b>{soilDepth}</li>
+                            <li><h4>Irrigação</h4></li>
+                            {
+                                irrigationSystem === 'IRRIGATED' ? (
+                                    <div>
+                                        <li><b>Tipo: </b>{irrigationType}</li>
+                                        <li><b>Percentímetro: </b>{percentimeter}</li>
+                                        <li><b>Folha: </b>{leaf}</li>
+                                        <li><b>Eficiência: </b>{efficiency}</li>
+                                    </div>
+                                ) : (
+                                        <li><b>NA</b></li>
+                                    )
+                            }
+                            <li><h4>Outros</h4></li>
+                            <li><b>Variedade: </b>{variety}</li>
+                            <li><b>População: </b>{population}</li>
+                            <li><b>Espaçamento: </b>{spacing}</li>
                         </ul>
                         <div className="area-card-types">
                             <div>
