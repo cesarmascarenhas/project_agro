@@ -1,41 +1,31 @@
 import React from 'react';
-
-// ICONS -----------------------------------------------------------------------------
-import cloudyIcon  from '../../assets/imgs/weather/cloudy.png';
-import rainIcon from '../../assets/imgs/weather/rain.png';
-import unknownIcon from '../../assets/imgs/weather/unknown.png';
-
-function getIcon(type){
-
-    switch(type){
-        case 'CLOUDY':
-            return cloudyIcon;
-        case 'RAIN':
-            return rainIcon;
-        default:
-            return unknownIcon;
-    }
-
-}
+import { weather } from '../../helpers/weather';
 
 const WeatherColumn = ({
     label,
     maxTemp,
     minTemp,
     type,
-    posfix
+    posfix,
+    precipProbability,
+    precipIntensity
 }) => {
     
     return (
         <div style={styles.column}>
             <p style={styles.max}>{maxTemp}º</p>
-            <img style={styles.type} alt={label} src={getIcon(type ? type : '')} />
+            <img style={styles.type} alt={label} src={weather[type.toLowerCase()]} />
             {
                 minTemp !== null && (
                     <p style={styles.min}>{minTemp}º</p>
                 )
             }
             <p style={styles.label}>{label}{posfix}</p>
+            <p style={styles.label}>
+                <img height="11" alt={label} src={weather.drop} />
+                {" " + precipProbability}
+            </p>
+            <p>{precipIntensity}</p>
         </div>
     )
 }

@@ -1,9 +1,11 @@
 import * as GraphQL from './graphql';
 
-//const server = 'http://localhost:2526';
-const server = 'https://174.138.58.197:2526';
-const endpoint = server+'/graphql';
-const uploadpoint = server+'/upload';
+//const server = 'http://10.1.1.87:2526';
+//const server = 'http://10.1.1.24:2526';
+const server = 'http://174.138.58.197:2526';
+
+const endpoint = server + '/graphql';
+const uploadpoint = server + '/upload';
 const method = 'POST';
 const headers = {
     "Content-Type": "application/graphql"
@@ -14,12 +16,12 @@ const headers = {
 // LOGIN ----------------------------------------
 export const customerLogin = async (props) => {
     return await fetch(endpoint, {
-            method,
-            headers,
-            body: GraphQL.customerLogin(props)
-        })
+        method,
+        headers,
+        body: GraphQL.customerLogin(props)
+    })
         .then(res => {
-            if(res.status === 500){
+            if (res.status === 500) {
                 return res.json().then(
                     res => res
                 )
@@ -32,12 +34,12 @@ export const customerLogin = async (props) => {
 // REGISTER ------------------------------------
 export const customerAdd = async (props) => {
     return await fetch(endpoint, {
-            method,
-            headers,
-            body: GraphQL.customerAdd(props)
-        })
+        method,
+        headers,
+        body: GraphQL.customerAdd(props)
+    })
         .then(res => {
-            if(res.status === 500){
+            if (res.status === 500) {
                 return res.json().then(
                     res => res
                 )
@@ -49,13 +51,14 @@ export const customerAdd = async (props) => {
 
 // COSTUMER --------------------------------------
 export const customer = async (props) => {
+    //console.log(GraphQL.customer(props))
     return await fetch(endpoint, {
-            method,
-            headers,
-            body: GraphQL.customer(props)
-        })
+        method,
+        headers,
+        body: GraphQL.customer(props)
+    })
         .then(res => {
-            if(res.status === 500){
+            if (res.status === 500) {
                 return res.json().then(
                     res => res
                 )
@@ -68,12 +71,12 @@ export const customer = async (props) => {
 // AREA =====================================
 export const areaAdd = async (props) => {
     return await fetch(endpoint, {
-            method,
-            headers,
-            body: GraphQL.areaAdd(props)
-        })
+        method,
+        headers,
+        body: GraphQL.areaAdd(props)
+    })
         .then(res => {
-            if(res.status === 500){
+            if (res.status === 500) {
                 return res.json().then(
                     res => res
                 )
@@ -110,4 +113,21 @@ export async function uploadImageAsync(uri) {
     }).then(
         res => res.json()
     );
+}
+
+// AREA =====================================
+export const irrigationAdd = async (props) => {
+    return await fetch(endpoint, {
+        method,
+        headers,
+        body: GraphQL.irrigationAdd(props)
+    }).then(res => {
+        if (res.status === 500) {
+            return res.json().then(
+                res => res
+            )
+        } else {
+            return res.json()
+        }
+    })
 }

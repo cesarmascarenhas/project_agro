@@ -1,16 +1,22 @@
 import React from 'react';
 import * as AREA from '../../helpers/area';
 import WeatherCard from '../Weather/WeatherCard';
+import * as TOOLS from '../../helpers/tools';
 
 export default function AreaCardFull({ area }) {
 
-    function getCulture(type) {
-        return AREA.culture.find(
+    function getCultureIcon(type) {
+        const annual = AREA.cultures.annual.find(
             culture => culture.type === type
         )
+        const perennial = AREA.cultures.perennial.find(
+            culture => culture.type === type
+        )
+    
+        return annual ? annual : perennial;
     }
-
-    function getSoil(type) {
+    
+    function getSoilIcon(type) {
         return AREA.soil.find(
             soil => soil.type === type
         )
@@ -39,11 +45,25 @@ export default function AreaCardFull({ area }) {
         variety,
         size,
         boundary,
-        nearStation
+        nearStation,
+        bh
     } = area;
 
-    const soil = getSoil(soilType);
-    const culture = getCulture(cultureType);
+    const soil = getSoilIcon(soilType);
+    const culture = getCultureIcon(cultureType);
+    const irrigation = getLastComputedIrrigationToLabel(bh);
+
+    function kmToHa(size){
+        return  Math.round((size * 100) * 100) / 100; 
+    }
+
+    function getLastComputedIrrigationToLabel(bh) {
+        const last = bh.slice(-1)[0];
+        return {
+            label: Math.round(last.irrigation * 1000) / 1000,
+            _createdAt: TOOLS.timestampToDateTimeShort(last._createdAt)
+        }
+    }
 
     return (
         <div className="area-card-full">
@@ -60,9 +80,14 @@ export default function AreaCardFull({ area }) {
                 <div style={{ display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
                     <div style={{ display: 'flex', borderBottom: "solid 1px #c3c3c3" }}>
                         <ul style={{ padding: "0 20px" }}>
-                            <li><h3>{`≅ ${size ? size : 'N/A'} ha`}</h3></li>
+                            <li><h3>{`≅ ${size ?   kmToHa(size) : 'N/A'} ha`}</h3></li>
                             <li><b>Data de plantio: </b>{new Date(sowingDate).toLocaleDateString('pt-BR', { dateStyle: 'short' })}</li>
                             <li><b>Dias de ciclo: </b>{cycleDays}</li>
+                            {
+                                bh.length > 0 && (
+                                    <li style={{color:'#437bce'}}>Sugestão de irrigação: {irrigation.label} ({irrigation._createdAt})</li>
+                                )
+                            }
                             <li><h4>Solo</h4></li>
                             <li><b>θcc: </b>{tetaCC}</li>
                             <li><b>θpmp: </b>{tetaPMP}</li>

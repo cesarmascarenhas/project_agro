@@ -8,6 +8,8 @@ const weatherFragment = `
     maxTemp
     minTemp
     type
+    precipProbability
+    precipIntensity
 `
 const coordinateFragment = `
     latitude
@@ -44,18 +46,36 @@ export function customer({
           imageFile
           soilType
           sowingDate
+          sowingDays
           cultureType
+          age
           spacing
+          street
           population
           tetaCC
           tetaPMP
+          tetaUnit
+          farm
+          consultant
+          producer
           soilHumidity
           soilDepth
+          soilDensity
           irrigationSystem
+          drippingSpacing
+          drippingFlow
+          kl
+          ks
+          pas
+          pam
           leaf
           percentimeter
           efficiency
           irrigationType
+          irrigation {
+            rain
+            irrigation
+          }
           variety
           bh {
             rootDepth
@@ -80,6 +100,7 @@ export function customer({
               precipitation
               windVelocity
               tempNow
+              tempAverage
               humidity
               _date
             }
@@ -184,7 +205,7 @@ export function areaAdd({ ...area }) {
 				const dateSplit = field[key].split('/')
 				const dateToISO = new Date(`${dateSplit[1]}/${dateSplit[0]}/${dateSplit[2]}`).toISOString();
 				qql += `${key}: "${dateToISO}" \n`;
-			} else if (key === 'cultureType' || key === 'soilType' || key === 'irrigationSystem') {
+			} else if (key === 'cultureType' || key === 'soilType' || key === 'irrigationSystem' || key === 'irrigationType') {
 				qql += `${key}: ${field[key]} \n`;
 			} else {
 				qql += `${key}: "${field[key]}" \n`;
@@ -204,11 +225,24 @@ export function areaAdd({ ...area }) {
         soilType
         sowingDate
         cultureType
+        age
+        spacing
+        street
         tetaCC
         tetaPMP
+        tetaUnit
+        farm
+        consultant
+        producer
         soilHumidity
         soilDepth
+        soilDensity
         irrigationSystem
+        drippingSpacing
+        drippingFlow
+        kl
+        pas
+        pam
         leaf
         percentimeter
         efficiency
@@ -245,6 +279,29 @@ export function areaAdd({ ...area }) {
           }
         }
         size
+      }
+    }
+  `
+}
+
+// Add manualy, either Rain or Irrigation props to an area
+export function irrigationAdd(props){
+
+  function formatIrrigation(){
+    let result = "";
+    for(let key in props){
+      result += `${key}: ${props[key]}`
+    }
+    return result;
+  }
+
+  return `
+    mutation {
+      irrigationAdd ( 
+        ${formatIrrigation()}
+      ){
+        error,
+        message
       }
     }
   `

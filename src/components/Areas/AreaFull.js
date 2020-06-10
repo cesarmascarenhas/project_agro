@@ -51,8 +51,12 @@ export function AreaFull({ data, openArea }) {
                                         <AreaChart data={formatBHData('AFDi', data.bh)} reverse color='rgb(18, 109, 179)' />
                                     </div>
                                     <div>
-                                        <h3>Irrigação (mm))</h3>
+                                        <h3>Irrigação (mm)</h3>
                                         <AreaChart data={formatBHData('irrigation', data.bh)} reverse color='rgb(0, 188, 212)' />
+                                    </div>
+                                    <div>
+                                        <h3>ETp </h3>
+                                        <AreaChart data={formatBHData('p', data.bh)} reverse color='rgb(0, 180, 202)' />
                                     </div>
                                 </div>
                             )
